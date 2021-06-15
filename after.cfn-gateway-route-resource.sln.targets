@@ -1,0 +1,9 @@
+<Project>
+    <Target Name="RestoreTools" AfterTargets="Restore">
+        <Exec Command="dotnet tool restore" ConsoleToMsBuild="true" />
+    </Target>
+
+    <Target Name="Format" DependsOnTargets="Restore;RestoreTools">
+        <Exec Command="dotnet format $(MSBuildThisFileDirectory)brighid-discord-adapter.sln --fix-style info" />
+    </Target>
+</Project>

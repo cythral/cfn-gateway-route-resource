@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <LangVersion>9.0</LangVersion>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="AWSSDK.AppMesh" Version="3.7.1.1" />
+        <PackageReference Include="Lambdajection" Version="0.8.1" />
+        <PackageReference Include="Lambdajection.CustomResource" Version="0.8.1" />
+    </ItemGroup>
+
+</Project>

@@ -1,0 +1,158 @@
+{
+  "StartAt": "Build",
+  "States": {
+    "Build": {
+      "Type": "Task",
+      "Retry": [
+        {
+          "ErrorEquals": [
+            "States.ALL"
+          ],
+          "MaxAttempts": 2
+        }
+      ],
+      "Resource": "arn:aws:states:::codebuild:startBuild.sync",
+      "Parameters": {
+        "ProjectName": "${BuildProject}",
+        "SourceVersion.$": "States.Format('{}^\\{{}\\}', $.ref, $.head_commit_id)"
+      },
+      "ResultPath": "$.BuildOutput",
+      "Next": "On Default Branch?"
+    },
+    "On Default Branch?": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.on_default_branch",
+          "BooleanEquals": true,
+          "Next": "Check if Superseded"
+        },
+        {
+          "Variable": "$.on_default_branch",
+          "BooleanEquals": false,
+          "Next": "Success"
+        }
+      ]
+    },
+    "Check if Superseded": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::sqs:sendMessage.waitForTaskToken",
+      "ResultPath": "$.SupersededOutput",
+      "Next": "Was Superseded?",
+      "Parameters": {
+        "QueueUrl": "${SupersessionQueue}",
+        "MessageGroupId": "${GithubRepo}",
+        "MessageBody": {
+          "Pipeline": "${GithubRepo}",
+          "CommitTimestamp.$": "$.head_commit.timestamp",
+          "Token.$": "$$.Task.Token"
+        }
+      }
+    },
+    "Was Superseded?": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.SupersededOutput.Superseded",
+          "BooleanEquals": true,
+          "Next": "Success"
+        },
+        {
+          "Variable": "$.SupersededOutput.Superseded",
+          "BooleanEquals": false,
+          "Next": "Deploy to Shared"
+        }
+      ]
+    },
+    "Deploy to Shared": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::sqs:sendMessage.waitForTaskToken",
+      "ResultPath": "$.SharedOutputs",
+      "Parameters": {
+        "QueueUrl": "${DeploymentQueue}",
+        "MessageGroupId": "${GithubRepo}-shared",
+        "MessageBody": {
+          "StackName": "${GithubRepo}",
+          "ZipLocation.$": "$.BuildOutput.Build.Artifacts.Location",
+          "TemplateFileName": "Handler.template.yml",
+          "Capabilities": [
+            "CAPABILITY_IAM",
+            "CAPABILITY_AUTO_EXPAND"
+          ],
+          "RoleArn": "${SharedRoleArn}",
+          "Token.$": "$$.Task.Token",
+          "EnvironmentName": "shared",
+          "CommitInfo": {
+            "GithubOwner": "${GithubOwner}",
+            "GithubRepository": "${GithubRepo}",
+            "GithubRef.$": "$.head_commit.id"
+          }
+        }
+      },
+      "Next": "Deploy to Dev"
+    },
+    "Deploy to Dev": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::sqs:sendMessage.waitForTaskToken",
+      "ResultPath": null,
+      "Parameters": {
+        "QueueUrl": "${DeploymentQueue}",
+        "MessageGroupId": "${GithubRepo}-dev",
+        "MessageBody": {
+          "StackName": "${GithubRepo}",
+          "ZipLocation.$": "$.BuildOutput.Build.Artifacts.Location",
+          "TemplateFileName": "cross-account.template.yml",
+          "ParameterOverrides": {
+            "GatewayRouteLambdaArn.$": "$.SharedOutputs.HandlerLambdaArn"
+          },
+          "RoleArn": "${DevRoleArn}",
+          "Token.$": "$$.Task.Token",
+          "Capabilities": [
+            "CAPABILITY_IAM",
+            "CAPABILITY_AUTO_EXPAND"
+          ],
+          "EnvironmentName": "dev",
+          "CommitInfo": {
+            "GithubOwner": "${GithubOwner}",
+            "GithubRepository": "${GithubRepo}",
+            "GithubRef.$": "$.head_commit.id"
+          }
+        }
+      },
+      "Next": "Deploy to Prod"
+    },
+    "Deploy to Prod": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::sqs:sendMessage.waitForTaskToken",
+      "ResultPath": null,
+      "Parameters": {
+        "QueueUrl": "${DeploymentQueue}",
+        "MessageGroupId": "${GithubRepo}-prod",
+        "MessageBody": {
+          "StackName": "${GithubRepo}",
+          "ZipLocation.$": "$.BuildOutput.Build.Artifacts.Location",
+          "TemplateFileName": "cross-account.template.yml",
+          "ParameterOverrides": {
+            "GatewayRouteLambdaArn.$": "$.SharedOutputs.HandlerLambdaArn"
+          },
+          "RoleArn": "${ProdRoleArn}",
+          "Token.$": "$$.Task.Token",
+          "Capabilities": [
+            "CAPABILITY_IAM",
+            "CAPABILITY_AUTO_EXPAND"
+          ],
+          "EnvironmentName": "prod",
+          "CommitInfo": {
+            "GithubOwner": "${GithubOwner}",
+            "GithubRepository": "${GithubRepo}",
+            "GithubRef.$": "$.head_commit.id"
+          }
+        }
+      },
+      "Next": "Success"
+    },
+    "Success": {
+      "Type": "Succeed"
+    }
+  }
+}

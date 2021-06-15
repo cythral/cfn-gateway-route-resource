@@ -1,0 +1,20 @@
+Description: Outputs for cross account access to the cfn-gateway-route-resource.
+Parameters:
+  GatewayRouteLambdaArn:
+    Type: String
+    Description: ARN of the Lambda-backed CFN Gateway Route Resource.
+
+Resources:
+  Parameter:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: /cfn-gateway-route-resource/lambda-arn
+      Type: String
+      Value: !Ref GatewayRouteLambdaArn
+
+Outputs:
+  GatewayRouteLambdaArn:
+    Value: !Ref GatewayRouteLambdaArn
+    Description: ARN of the lambda for the CFN Gateway Route Resource.
+    Export:
+      Name: !Sub ${AWS::StackName}:SecretLambdaArn
