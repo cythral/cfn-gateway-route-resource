@@ -17,4 +17,4 @@ Outputs:
     Value: !Ref GatewayRouteLambdaArn
     Description: ARN of the lambda for the CFN Gateway Route Resource.
     Export:
-      Name: !Sub ${AWS::StackName}:SecretLambdaArn
+      Name: !Sub ${AWS::StackName}:GatewayRouteLambdaArn
