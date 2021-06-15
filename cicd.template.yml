@@ -26,38 +26,6 @@ Parameters:
     Description: Key name where the pipeline definition is located
 
 Resources:
-  DevDnsRecords:
-    Type: AWS::Route53::RecordSetGroup
-    Properties:
-      HostedZoneId: !ImportValue cfn-dns:HostedZoneId
-      RecordSets:
-        - Name: discord.dev.brigh.id
-          Type: A
-          AliasTarget:
-            HostedZoneId: !ImportValue cfn-gateway:LoadBalancerCanonicalHostedZoneId
-            DNSName: !ImportValue cfn-gateway:LoadBalancerDnsName
-        - Name: discord.dev.brigh.id
-          Type: AAAA
-          AliasTarget:
-            HostedZoneId: !ImportValue cfn-gateway:LoadBalancerCanonicalHostedZoneId
-            DNSName: !ImportValue cfn-gateway:LoadBalancerDnsName
-
-  ProdDnsRecords:
-    Type: AWS::Route53::RecordSetGroup
-    Properties:
-      HostedZoneId: !ImportValue cfn-dns:HostedZoneId
-      RecordSets:
-        - Name: discord.brigh.id
-          Type: A
-          AliasTarget:
-            HostedZoneId: !ImportValue cfn-gateway:LoadBalancerCanonicalHostedZoneId
-            DNSName: !ImportValue cfn-gateway:LoadBalancerDnsName
-        - Name: discord.brigh.id
-          Type: AAAA
-          AliasTarget:
-            HostedZoneId: !ImportValue cfn-gateway:LoadBalancerCanonicalHostedZoneId
-            DNSName: !ImportValue cfn-gateway:LoadBalancerDnsName
-
   ArtifactStore:
     Type: AWS::S3::Bucket
 
