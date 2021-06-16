@@ -47,6 +47,8 @@ namespace Cythral.CloudFormation.Resources
         public async Task<GatewayRouteData> Create(CustomResourceRequest<GatewayRouteProperties> request, CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
+            logger.LogInformation("Received request: {@request}", request);
+
             var props = request.ResourceProperties!;
             var mappedRequest = new CreateGatewayRouteRequest
             {
@@ -59,6 +61,7 @@ namespace Cythral.CloudFormation.Resources
                 VirtualGatewayName = props.VirtualGatewayName,
             };
 
+            logger.LogInformation("Sending appmesh:CreateGatewayRoute request: {@request}", mappedRequest);
             var response = await appMesh.CreateGatewayRouteAsync(mappedRequest, cancellationToken);
             logger.LogInformation("Received appmesh:CreateGatewayRoute response: {@response}", response);
 
@@ -74,6 +77,8 @@ namespace Cythral.CloudFormation.Resources
         public async Task<GatewayRouteData> Update(CustomResourceRequest<GatewayRouteProperties> request, CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
+            logger.LogInformation("Received request: {@request}", request);
+
             var props = request.ResourceProperties!;
             var mappedRequest = new UpdateGatewayRouteRequest
             {
@@ -85,8 +90,9 @@ namespace Cythral.CloudFormation.Resources
                 VirtualGatewayName = props.VirtualGatewayName,
             };
 
+            logger.LogInformation("Sending appmesh:UpdateGatewayRoute request: {@request}", mappedRequest);
             var response = await appMesh.UpdateGatewayRouteAsync(mappedRequest, cancellationToken);
-            logger.LogInformation("Received appmesh:CreateGatewayRoute response: {@response}", response);
+            logger.LogInformation("Received appmesh:UpdateGatewayRoute response: {@response}", response);
 
             return new GatewayRouteData { Id = request.PhysicalResourceId };
         }
@@ -100,6 +106,8 @@ namespace Cythral.CloudFormation.Resources
         public async Task<GatewayRouteData> Delete(CustomResourceRequest<GatewayRouteProperties> request, CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
+            logger.LogInformation("Received request: {@request}", request);
+
             var props = request.ResourceProperties!;
             var mappedRequest = new DeleteGatewayRouteRequest
             {
@@ -109,8 +117,9 @@ namespace Cythral.CloudFormation.Resources
                 VirtualGatewayName = props.VirtualGatewayName,
             };
 
+            logger.LogInformation("Sending appmesh:DeleteGatewayRoute request: {@request}", mappedRequest);
             var response = await appMesh.DeleteGatewayRouteAsync(mappedRequest, cancellationToken);
-            logger.LogInformation("Received appmesh:CreateGatewayRoute response: {@response}", response);
+            logger.LogInformation("Received appmesh:DeleteGatewayRoute response: {@response}", response);
 
             return new GatewayRouteData { Id = request.PhysicalResourceId };
         }
