@@ -46,8 +46,8 @@ namespace Cythral.CloudFormation.Resources
         /// <returns>The gateway route output data.</returns>
         public async Task<GatewayRouteData> Create(CustomResourceRequest<GatewayRouteProperties> request, CancellationToken cancellationToken = default)
         {
-            cancellationToken.ThrowIfCancellationRequested();
             logger.LogInformation("Received request: {@request}", request);
+            cancellationToken.ThrowIfCancellationRequested();
 
             var props = request.ResourceProperties!;
             var mappedRequest = new CreateGatewayRouteRequest
@@ -76,8 +76,8 @@ namespace Cythral.CloudFormation.Resources
         /// <returns>The gateway route output data.</returns>
         public async Task<GatewayRouteData> Update(CustomResourceRequest<GatewayRouteProperties> request, CancellationToken cancellationToken = default)
         {
-            cancellationToken.ThrowIfCancellationRequested();
             logger.LogInformation("Received request: {@request}", request);
+            cancellationToken.ThrowIfCancellationRequested();
 
             var props = request.ResourceProperties!;
             var mappedRequest = new UpdateGatewayRouteRequest
@@ -105,8 +105,8 @@ namespace Cythral.CloudFormation.Resources
         /// <returns>The gateway route output data.</returns>
         public async Task<GatewayRouteData> Delete(CustomResourceRequest<GatewayRouteProperties> request, CancellationToken cancellationToken = default)
         {
-            cancellationToken.ThrowIfCancellationRequested();
             logger.LogInformation("Received request: {@request}", request);
+            cancellationToken.ThrowIfCancellationRequested();
 
             var props = request.ResourceProperties!;
             var mappedRequest = new DeleteGatewayRouteRequest
