@@ -1592,7 +1592,8 @@
         "dependencies": {
           "AWSSDK.AppMesh": "3.7.1.1",
           "Lambdajection": "0.8.2",
-          "Lambdajection.CustomResource": "0.8.2"
+          "Lambdajection.CustomResource": "0.8.2",
+          "System.ComponentModel.Annotations": "5.0.0"
         }
       }
     }
