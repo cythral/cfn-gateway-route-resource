@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -46,7 +46,7 @@ namespace Cythral.CloudFormation.Resources
         /// <returns>The gateway route output data.</returns>
         public async Task<GatewayRouteData> Create(CustomResourceRequest<GatewayRouteProperties> request, CancellationToken cancellationToken = default)
         {
-            logger.LogInformation("Received request: {@request}", request);
+            logger.LogInformation("Received request: " + JsonSerializer.Serialize(request));
             cancellationToken.ThrowIfCancellationRequested();
 
             var props = request.ResourceProperties!;
@@ -61,9 +61,9 @@ namespace Cythral.CloudFormation.Resources
                 VirtualGatewayName = props.VirtualGatewayName,
             };
 
-            logger.LogInformation("Sending appmesh:CreateGatewayRoute request: {@request}", mappedRequest);
+            logger.LogInformation("Sending appmesh:CreateGatewayRoute request: " + JsonSerializer.Serialize(mappedRequest));
             var response = await appMesh.CreateGatewayRouteAsync(mappedRequest, cancellationToken);
-            logger.LogInformation("Received appmesh:CreateGatewayRoute response: {@response}", response);
+            logger.LogInformation("Received appmesh:CreateGatewayRoute response: " + JsonSerializer.Serialize(response));
 
             return new GatewayRouteData();
         }
@@ -76,7 +76,7 @@ namespace Cythral.CloudFormation.Resources
         /// <returns>The gateway route output data.</returns>
         public async Task<GatewayRouteData> Update(CustomResourceRequest<GatewayRouteProperties> request, CancellationToken cancellationToken = default)
         {
-            logger.LogInformation("Received request: {@request}", request);
+            logger.LogInformation("Received request: " + JsonSerializer.Serialize(request));
             cancellationToken.ThrowIfCancellationRequested();
 
             var props = request.ResourceProperties!;
@@ -90,9 +90,9 @@ namespace Cythral.CloudFormation.Resources
                 VirtualGatewayName = props.VirtualGatewayName,
             };
 
-            logger.LogInformation("Sending appmesh:UpdateGatewayRoute request: {@request}", mappedRequest);
+            logger.LogInformation("Sending appmesh:UpdateGatewayRoute request: " + JsonSerializer.Serialize(mappedRequest));
             var response = await appMesh.UpdateGatewayRouteAsync(mappedRequest, cancellationToken);
-            logger.LogInformation("Received appmesh:UpdateGatewayRoute response: {@response}", response);
+            logger.LogInformation("Received appmesh:UpdateGatewayRoute response: " + JsonSerializer.Serialize(response));
 
             return new GatewayRouteData { Id = request.PhysicalResourceId };
         }
@@ -105,7 +105,7 @@ namespace Cythral.CloudFormation.Resources
         /// <returns>The gateway route output data.</returns>
         public async Task<GatewayRouteData> Delete(CustomResourceRequest<GatewayRouteProperties> request, CancellationToken cancellationToken = default)
         {
-            logger.LogInformation("Received request: {@request}", request);
+            logger.LogInformation("Received request: " + JsonSerializer.Serialize(request));
             cancellationToken.ThrowIfCancellationRequested();
 
             var props = request.ResourceProperties!;
@@ -117,9 +117,9 @@ namespace Cythral.CloudFormation.Resources
                 VirtualGatewayName = props.VirtualGatewayName,
             };
 
-            logger.LogInformation("Sending appmesh:DeleteGatewayRoute request: {@request}", mappedRequest);
+            logger.LogInformation("Sending appmesh:DeleteGatewayRoute request: " + JsonSerializer.Serialize(mappedRequest));
             var response = await appMesh.DeleteGatewayRouteAsync(mappedRequest, cancellationToken);
-            logger.LogInformation("Received appmesh:DeleteGatewayRoute response: {@response}", response);
+            logger.LogInformation("Received appmesh:DeleteGatewayRoute response: " + JsonSerializer.Serialize(response));
 
             return new GatewayRouteData { Id = request.PhysicalResourceId };
         }
