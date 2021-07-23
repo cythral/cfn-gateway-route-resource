@@ -8,8 +8,8 @@
 
     <ItemGroup>
         <PackageReference Include="AWSSDK.AppMesh" Version="3.7.1.15" />
-        <PackageReference Include="Lambdajection" Version="0.8.2" />
-        <PackageReference Include="Lambdajection.CustomResource" Version="0.8.2" />
+        <PackageReference Include="Lambdajection" Version="0.8.4" />
+        <PackageReference Include="Lambdajection.CustomResource" Version="0.8.4" />
         <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
     </ItemGroup>
 
