@@ -126,16 +126,16 @@
       },
       "AWSSDK.AppMesh": {
         "type": "Transitive",
-        "resolved": "3.7.1.22",
-        "contentHash": "/UzBUsjbleQJSdF9HIuXSfA6CtaqPjtDhRkMaF2ARHBfEzPpDDLvMfDsL1P1L+WD/KHyUPB0vYK81pODFz8xVQ==",
+        "resolved": "3.7.1.23",
+        "contentHash": "+mJsoKYy/mKBAjpiq5BPdqCgdPTRDlHF4kwyT5rHgAeprR6714/i2JL+T/pAYohfVlR5hMjRoL9ud9E9hnzNnQ==",
         "dependencies": {
-          "AWSSDK.Core": "[3.7.2.3, 4.0.0)"
+          "AWSSDK.Core": "[3.7.2.4, 4.0.0)"
         }
       },
       "AWSSDK.Core": {
         "type": "Transitive",
-        "resolved": "3.7.2.3",
-        "contentHash": "3aQb3G2ihLS/D1e5Au/Ii358j49cefnxaj2NLtyythZjwakQkkWBMT9GnU6WPo15tZUB9F/GuclJRGvjUuP5Ng=="
+        "resolved": "3.7.2.4",
+        "contentHash": "UTgpB8k4F97wT3YUTWUo65va6LMPoKfIHcVgy4Rds6ozOJaoaoTMnnO3vZ67pU08TIasm+6qh9XxB5oAcWniow=="
       },
       "Castle.Core": {
         "type": "Transitive",
@@ -1583,7 +1583,7 @@
       "gatewayrouteresource": {
         "type": "Project",
         "dependencies": {
-          "AWSSDK.AppMesh": "3.7.1.22",
+          "AWSSDK.AppMesh": "3.7.1.23",
           "Lambdajection": "0.8.4",
           "Lambdajection.CustomResource": "0.8.4",
           "System.ComponentModel.Annotations": "5.0.0"
