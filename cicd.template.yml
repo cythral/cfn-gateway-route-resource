@@ -47,25 +47,6 @@ Resources:
                 - !ImportValue cfn-metadata:DevAgentRoleArn
                 - !ImportValue cfn-metadata:ProdAgentRoleArn
 
-  DockerRepo:
-    Type: AWS::ECR::Repository
-    Properties:
-      RepositoryPolicyText:
-        Version: 2012-10-17
-        Statement:
-          - Effect: Allow
-            Action:
-              - ecr:GetAuthorizationToken
-              - ecr:GetDownloadUrlForLayer
-              - ecr:BatchGetImage
-              - ecr:BatchCheckLayerAvailability
-              - ecr:ListImages
-            Principal:
-              AWS:
-                - !Ref AWS::AccountId
-                - !ImportValue cfn-metadata:DevAccountId
-                - !ImportValue cfn-metadata:ProdAccountId
-
   BuildProject:
     Type: AWS::CodeBuild::Project
     Properties:
@@ -80,8 +61,6 @@ Resources:
         EnvironmentVariables:
           - Name: ARTIFACT_STORE
             Value: !Ref ArtifactStore
-          - Name: REPOSITORY_URI
-            Value: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${DockerRepo}
         Type: LINUX_CONTAINER
       Cache:
         Type: LOCAL
