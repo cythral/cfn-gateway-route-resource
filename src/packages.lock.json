@@ -4,11 +4,11 @@
     ".NETCoreApp,Version=v3.1": {
       "AWSSDK.AppMesh": {
         "type": "Direct",
-        "requested": "[3.7.2.18, )",
-        "resolved": "3.7.2.18",
-        "contentHash": "JhQkvlwmfLu551C7QA7HzC/IoDhnveqZU7Og1plo/B01ngNUj1WO9/5R41hlGDgPky6TLNyETaQzLkkQMRBvdA==",
+        "requested": "[3.7.2.19, )",
+        "resolved": "3.7.2.19",
+        "contentHash": "TUGjlSA/K4E3aD27ARlqNYkvAnLgLAjDiiTmCerTbAIoopyJoFumARA19R1/taZs1ncKZppAhQu7NmG1Aw1tHg==",
         "dependencies": {
-          "AWSSDK.Core": "[3.7.12.5, 4.0.0)"
+          "AWSSDK.Core": "[3.7.12.6, 4.0.0)"
         }
       },
       "Lambdajection": {
@@ -66,8 +66,8 @@
       },
       "AWSSDK.Core": {
         "type": "Transitive",
-        "resolved": "3.7.12.5",
-        "contentHash": "N0eY87bXXlKDJqO1iZmNLXCasXM8tdD9VLFGVnctm6UROY0gBaYClTobncM2TXyPIkMPxfNUBUbMOMRk1QYRBQ=="
+        "resolved": "3.7.12.6",
+        "contentHash": "uwXtdOQoLtWGo59Eg9SI1BclXg+42gk1gTizz2QOlOgBvsfNuXejyIvzolrfcQxU2bQOgH81sB9PvPaDz3EcuA=="
       },
       "Humanizer.Core": {
         "type": "Transitive",
