@@ -1583,10 +1583,10 @@
       "gatewayrouteresource": {
         "type": "Project",
         "dependencies": {
-          "AWSSDK.AppMesh": "3.7.100.101",
-          "Lambdajection": "0.8.4",
-          "Lambdajection.CustomResource": "0.8.4",
-          "System.ComponentModel.Annotations": "5.0.0"
+          "AWSSDK.AppMesh": "[3.7.100.101, )",
+          "Lambdajection": "[0.8.4, )",
+          "Lambdajection.CustomResource": "[0.8.4, )",
+          "System.ComponentModel.Annotations": "[5.0.0, )"
         }
       }
     }
